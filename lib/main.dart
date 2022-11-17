@@ -54,6 +54,37 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('人生カウンター'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("全部削除してもよろしいですか？"),
+                        actions: <Widget>[
+                          // ボタン領域
+                          TextButton(
+                            child: Text("いいえ"),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          TextButton(
+                            child: Text("はい"),
+                            onPressed: () {
+                              lifeEventBox?.removeAll();
+                              fetchLifeEvents();
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+              child: Text(
+                '全削除',
+                style: TextStyle(color: Colors.white),
+              )),
+        ],
       ),
       body: ListView.builder(
         itemCount: lifeEvents.length,
