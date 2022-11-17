@@ -14,7 +14,7 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'life_event.dart';
+import 'life_counter/life_event.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -25,21 +25,9 @@ final _entities = <ModelEntity>[
       lastPropertyId: const IdUid(3, 2595724690785754032),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 5510407588353392586),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1602082154982540758),
-            name: 'title',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 2595724690785754032),
-            name: 'count',
-            type: 6,
-            flags: 0)
+        ModelProperty(id: const IdUid(1, 5510407588353392586), name: 'id', type: 6, flags: 1),
+        ModelProperty(id: const IdUid(2, 1602082154982540758), name: 'title', type: 9, flags: 0),
+        ModelProperty(id: const IdUid(3, 2595724690785754032), name: 'count', type: 6, flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -100,8 +88,7 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = LifeEvent(
-              title: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
+              title: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
               count: const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
@@ -118,10 +105,8 @@ class LifeEvent_ {
   static final id = QueryIntegerProperty<LifeEvent>(_entities[0].properties[0]);
 
   /// see [LifeEvent.title]
-  static final title =
-      QueryStringProperty<LifeEvent>(_entities[0].properties[1]);
+  static final title = QueryStringProperty<LifeEvent>(_entities[0].properties[1]);
 
   /// see [LifeEvent.count]
-  static final count =
-      QueryIntegerProperty<LifeEvent>(_entities[0].properties[2]);
+  static final count = QueryIntegerProperty<LifeEvent>(_entities[0].properties[2]);
 }

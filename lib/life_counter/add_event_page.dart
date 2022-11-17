@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_counter/life_event.dart';
+import 'package:life_counter/life_counter/life_event.dart';
 
 class AddLifeEventPage extends StatefulWidget {
   const AddLifeEventPage({Key? key}) : super(key: key);
