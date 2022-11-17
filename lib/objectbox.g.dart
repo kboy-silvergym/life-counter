@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'diary/diary.dart';
 import 'life_counter/life_event.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -25,9 +26,45 @@ final _entities = <ModelEntity>[
       lastPropertyId: const IdUid(3, 2595724690785754032),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(id: const IdUid(1, 5510407588353392586), name: 'id', type: 6, flags: 1),
-        ModelProperty(id: const IdUid(2, 1602082154982540758), name: 'title', type: 9, flags: 0),
-        ModelProperty(id: const IdUid(3, 2595724690785754032), name: 'count', type: 6, flags: 0)
+        ModelProperty(
+            id: const IdUid(1, 5510407588353392586),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1602082154982540758),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2595724690785754032),
+            name: 'count',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 3219656706585027900),
+      name: 'Diary',
+      lastPropertyId: const IdUid(3, 5912184607069078994),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5647922442096216433),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2198607103122946535),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5912184607069078994),
+            name: 'description',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -53,7 +90,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 6752159074846125179),
+      lastEntityId: const IdUid(2, 3219656706585027900),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -88,8 +125,40 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = LifeEvent(
-              title: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 6, ''),
+              title: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
               count: const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    Diary: EntityDefinition<Diary>(
+        model: _entities[1],
+        toOneRelations: (Diary object) => [],
+        toManyRelations: (Diary object) => {},
+        getId: (Diary object) => object.id,
+        setId: (Diary object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Diary object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final descriptionOffset = fbb.writeString(object.description);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, titleOffset);
+          fbb.addOffset(2, descriptionOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Diary(
+              title: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              description: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -105,8 +174,23 @@ class LifeEvent_ {
   static final id = QueryIntegerProperty<LifeEvent>(_entities[0].properties[0]);
 
   /// see [LifeEvent.title]
-  static final title = QueryStringProperty<LifeEvent>(_entities[0].properties[1]);
+  static final title =
+      QueryStringProperty<LifeEvent>(_entities[0].properties[1]);
 
   /// see [LifeEvent.count]
-  static final count = QueryIntegerProperty<LifeEvent>(_entities[0].properties[2]);
+  static final count =
+      QueryIntegerProperty<LifeEvent>(_entities[0].properties[2]);
+}
+
+/// [Diary] entity fields to define ObjectBox queries.
+class Diary_ {
+  /// see [Diary.id]
+  static final id = QueryIntegerProperty<Diary>(_entities[1].properties[0]);
+
+  /// see [Diary.title]
+  static final title = QueryStringProperty<Diary>(_entities[1].properties[1]);
+
+  /// see [Diary.description]
+  static final description =
+      QueryStringProperty<Diary>(_entities[1].properties[2]);
 }
