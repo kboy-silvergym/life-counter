@@ -39,11 +39,13 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
                 description = text;
               },
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             ElevatedButton(
               onPressed: () {
-                final lifeEvent = Diary(title: title, description: description);
-                Navigator.of(context).pop(lifeEvent);
+                final diary = Diary(title: title, description: description);
+                Navigator.of(context).pop(diary);
               },
               child: Text('追加'),
             )

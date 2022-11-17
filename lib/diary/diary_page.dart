@@ -98,4 +98,10 @@ class _DiaryPagePageState extends State<DiaryPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    store?.close();
+  }
 }

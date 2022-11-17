@@ -138,4 +138,10 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    store?.close();
+  }
 }
