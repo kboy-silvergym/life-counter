@@ -13,8 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LifeCounterPage(),
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const LifeCounterPage(),
     );
   }
 }
@@ -73,12 +74,25 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
                 ),
                 IconButton(
                   onPressed: () {
-                    lifeEvent.count++;
+                    lifeEvent.count--;
                     lifeEventBox?.put(lifeEvent);
                     fetchLifeEvents();
                   },
-                  icon: const Icon(Icons.plus_one),
+                  icon: const Icon(
+                    Icons.exposure_minus_1_rounded,
+                    color: Colors.blue,
+                  ),
                 ),
+                IconButton(
+                    onPressed: () {
+                      lifeEvent.count++;
+                      lifeEventBox?.put(lifeEvent);
+                      fetchLifeEvents();
+                    },
+                    icon: const Icon(
+                      Icons.plus_one_rounded,
+                      color: Colors.blue,
+                    )),
                 IconButton(
                   onPressed: () {
                     lifeEventBox?.remove(lifeEvent.id);
